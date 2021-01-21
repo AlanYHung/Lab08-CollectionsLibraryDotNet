@@ -71,37 +71,31 @@ namespace LibraryCollections
                     Console.Write("\nPlease choose a number (1-6): ");
                     userInput = Console.ReadLine();
                     userInputInt = Convert.ToInt32(userInput);
+                    Console.Clear();
 
-                    if(userInputInt < 1 || userInputInt > 6)
+                    switch (userInputInt)
                     {
-                        Console.Clear();
-                        Console.WriteLine("You did not enter a number between 1 and 6.  Please choose again.");
-                        PauseScreen();
-                    }
-                    else
-                    {
-                        Console.Clear();
-
-                        switch (userInputInt)
-                        {
-                            case 1:
-                                Console.WriteLine(ViewAllBooks(bookCollection));
-                                PauseScreen();
-                                break;
-                            case 2:
-                                bookCollection.AddBook(userAddBook());
-                                break;
-                            case 3:
-                                bookBag.Add(userBorrow(bookCollection));
-                                break;
-                            case 4:
-                                ReturnBook(bookBag, bookCollection);
-                                break;
-                            case 5:
-                                Console.WriteLine(ViewBookBag(bookBag));
-                                PauseScreen();
-                                break;
-                        }
+                        case 1:
+                            Console.WriteLine(ViewAllBooks(bookCollection));
+                            PauseScreen();
+                            break;
+                        case 2:
+                            bookCollection.AddBook(userAddBook());
+                            break;
+                        case 3:
+                            bookBag.Add(userBorrow(bookCollection));
+                            break;
+                        case 4:
+                            ReturnBook(bookBag, bookCollection);
+                            break;
+                        case 5:
+                            Console.WriteLine(ViewBookBag(bookBag));
+                            PauseScreen();
+                            break;
+                        default:
+                            Console.WriteLine("You did not enter a number between 1 and 6.  Please choose again.");
+                            PauseScreen();
+                            break;
                     }
                 } while (userInputInt != 6);
             }
