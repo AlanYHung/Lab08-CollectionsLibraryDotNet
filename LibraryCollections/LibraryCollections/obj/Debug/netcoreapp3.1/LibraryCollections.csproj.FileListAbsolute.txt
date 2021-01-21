@@ -1,0 +1,13 @@
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\bin\Debug\netcoreapp3.1\LibraryCollections.exe
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\bin\Debug\netcoreapp3.1\LibraryCollections.deps.json
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\bin\Debug\netcoreapp3.1\LibraryCollections.runtimeconfig.json
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\bin\Debug\netcoreapp3.1\LibraryCollections.runtimeconfig.dev.json
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\bin\Debug\netcoreapp3.1\LibraryCollections.dll
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\bin\Debug\netcoreapp3.1\LibraryCollections.pdb
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\obj\Debug\netcoreapp3.1\LibraryCollections.csprojAssemblyReference.cache
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\obj\Debug\netcoreapp3.1\LibraryCollections.AssemblyInfoInputs.cache
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\obj\Debug\netcoreapp3.1\LibraryCollections.AssemblyInfo.cs
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\obj\Debug\netcoreapp3.1\LibraryCollections.csproj.CoreCompileInputs.cache
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\obj\Debug\netcoreapp3.1\LibraryCollections.dll
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\obj\Debug\netcoreapp3.1\LibraryCollections.pdb
+C:\Users\AlanY\Documents\Projects\Code Fellows 401\lab08-library\LibraryCollections\LibraryCollections\obj\Debug\netcoreapp3.1\LibraryCollections.genruntimeconfig.cache
