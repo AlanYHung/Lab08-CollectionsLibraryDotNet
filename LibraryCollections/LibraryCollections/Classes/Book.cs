@@ -38,7 +38,7 @@ namespace LibraryCollections.Classes
         Fantasy,
         Fiction,
         NonFiction,
-        ScienceFiction,
+        SciFi,
         Romance,
         Encyclopedia
     }

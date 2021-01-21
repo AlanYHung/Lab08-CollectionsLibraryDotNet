@@ -17,6 +17,7 @@ namespace LibraryCollections
             catch(Exception e)
             {
                 Console.WriteLine("Something went wrong...{0}", e);
+                PauseScreen();
             }
             finally
             {
@@ -32,7 +33,7 @@ namespace LibraryCollections
         public static Library<Book> populateLibrary()
         {
             Book book1 = new Book("All Quiet on the Western Front", Genre.Fiction, "Erich", "Remarque");
-            Book book2 = new Book("The Sirens of Titan", Genre.ScienceFiction, "Kurt", "Vonnegut");
+            Book book2 = new Book("The Sirens of Titan", Genre.SciFi, "Kurt", "Vonnegut");
             Book book3 = new Book("The Dragon Reborn", Genre.Fantasy, "Robert", "Jordan");
             Book book4 = new Book("Magical Mushrooms, Mischevious Molds", Genre.NonFiction, "George", "Hudler");
             Book book5 = new Book("Northwest Trees", Genre.Encyclopedia, "Ramona", "Hammerly");
@@ -88,7 +89,7 @@ namespace LibraryCollections
                                 PauseScreen();
                                 break;
                             case 2:
-                                bookCollection.AddBook(userAddBook());
+                                userAddBook();
                                 break;
                             case 3:
                                 break;
@@ -137,26 +138,48 @@ namespace LibraryCollections
         public static Book userAddBook()
         {
             string userTitle;
-            string userGenre;
+            string userGenre = "";
             string userAuthFName = "";
             string userAuthLName = "";
+            Book userBook = new Book();
+            int numOfGenres;
 
             try
             {
                 Console.WriteLine("What is the title of your Book?");
                 userTitle = Console.ReadLine();
 
-                do
-                {
+                //do
+                //{
                     Console.WriteLine("What genre does your book belong to?\n\n");
-                    Console.WriteLine("1. ");
-                }
-           }
+                    numOfGenres = GenreOutput();
+                //}while()
+
+                return userBook;
+            }
+            catch(FormatException fe)
+            {
+                throw fe;
+            }
+        }
+
+        public static int GenreOutput()    
+        {
+            int count = 1;
+            var genreValues = Enum.GetValues(typeof(Genre));
+
+            foreach (var genre in genreValues)
+            {
+                Console.WriteLine("{0}. {1}", count, genre);
+                count++;
+            }
+
+            return count;
         }
 
         public static Book AddABook()
         {
-
+            return new Book();
         }
     }
 }
