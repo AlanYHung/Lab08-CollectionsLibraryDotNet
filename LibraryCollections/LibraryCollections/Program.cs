@@ -4,11 +4,11 @@ using LibraryCollections.Classes;
 
 namespace LibraryCollections
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            try
+           try
             {
                 Library<Book> bookCollection = populateLibrary();
                 List<Book> bookBag = new List<Book>();
@@ -89,13 +89,17 @@ namespace LibraryCollections
                                 PauseScreen();
                                 break;
                             case 2:
-                                userAddBook();
+                                bookCollection.AddBook(userAddBook());
                                 break;
                             case 3:
+                                bookBag.Add(userBorrow(bookCollection));
                                 break;
                             case 4:
+                                ReturnBook(bookBag, bookCollection);
                                 break;
                             case 5:
+                                Console.WriteLine(ViewBookBag(bookBag));
+                                PauseScreen();
                                 break;
                         }
                     }
@@ -128,20 +132,25 @@ namespace LibraryCollections
 
             foreach (var libBook in bookCollection)
             {
-                output += $"{count++}. {libBook.Title}\n";
+                output += $"{count++}. {libBook.Title} - {libBook.FirstName} {libBook.LastName}\n";
 
             }
 
             return output;
         }
 
+        /// <summary>
+        /// User Interfact to get Title, Genre, and Author Name
+        /// </summary>
+        /// <returns>returns the newbook returned by AddABook method</returns>
         public static Book userAddBook()
         {
             string userTitle;
-            string userGenre = "";
+            string userGenre;
+            int userGenreInt;
+            string userAuthorKnown;
             string userAuthFName = "";
             string userAuthLName = "";
-            Book userBook = new Book();
             int numOfGenres;
 
             try
@@ -149,13 +158,46 @@ namespace LibraryCollections
                 Console.WriteLine("What is the title of your Book?");
                 userTitle = Console.ReadLine();
 
-                //do
-                //{
+                do
+                {
+                    Console.Clear();
                     Console.WriteLine("What genre does your book belong to?\n\n");
                     numOfGenres = GenreOutput();
-                //}while()
+                    Console.Write("\nPlease choose a number (1-{0}): ", numOfGenres);
+                    userGenre = Console.ReadLine();
+                    userGenreInt = Convert.ToInt32(userGenre);
 
-                return userBook;
+                    if(userGenreInt < 1 || userGenreInt > numOfGenres)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\nInvalid Choice.  Please choose a number between 1 and {0}.", numOfGenres);
+                        PauseScreen();
+                    }
+                } while (userGenreInt < 1 || userGenreInt > numOfGenres);
+
+                do
+                {
+                    Console.Clear();
+                    Console.Write("Do you know the Author for this book? (y/n): ");
+                    userAuthorKnown = Console.ReadLine().ToLower();
+
+                    if (userAuthorKnown != "y" && userAuthorKnown != "n")
+                    {
+                        Console.WriteLine("Please enter 'y' or 'n'.");
+                        PauseScreen();
+                    }
+                } while (userAuthorKnown != "y" && userAuthorKnown != "n");
+
+                if(userAuthorKnown == "y")
+                {
+                    Console.WriteLine("What is the Author's First Name?");
+                    userAuthFName = Console.ReadLine();
+                    Console.WriteLine("What is the Author's Last Name?");
+                    userAuthLName = Console.ReadLine();
+                }
+
+                // https://stackoverflow.com/questions/23563960/how-to-get-enum-value-by-string-or-int
+                return AddABook(userTitle, (Genre)userGenreInt, userAuthFName, userAuthLName);
             }
             catch(FormatException fe)
             {
@@ -163,6 +205,10 @@ namespace LibraryCollections
             }
         }
 
+        /// <summary>
+        /// Outputs the values of the Enum Variable Genre
+        /// </summary>
+        /// <returns>Length of Genre</returns>
         public static int GenreOutput()    
         {
             int count = 1;
@@ -174,12 +220,133 @@ namespace LibraryCollections
                 count++;
             }
 
-            return count;
+            return count - 1;
         }
 
-        public static Book AddABook()
+        /// <summary>
+        /// Returns a new Book using the parameters sent in to instantiate the Object
+        /// </summary>
+        /// <param name="newTitle">Book Title</param>
+        /// <param name="newGenre">Book Genre</param>
+        /// <param name="authFName">Author First Name</param>
+        /// <param name="authLName">Author Last Name</param>
+        /// <returns>new Book Instance</returns>
+        public static Book AddABook(string newTitle, Genre newGenre, string authFName, string authLName)
         {
-            return new Book();
+            if(authFName == "")
+            {
+                return new Book(newTitle, newGenre);
+            }
+            else
+            {
+                return new Book(newTitle, newGenre, authFName, authLName);
+            }
+        }
+
+        /// Displays books availible to borrow to the user then allows them to select one and calls the borrow method for that book
+        /// param name="bookCollection" brings in the library
+        /// returns: the borrowed book
+        public static Book userBorrow(Library<Book> bookCollection)
+        {
+            string userInput;
+            int userInputInt;
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("What book would you like to borrow?\n");
+                Console.WriteLine(ViewAllBooks(bookCollection));
+                Console.Write("Please make a selection between (1-{0}): ", bookCollection.BookCount());
+                userInput = Console.ReadLine();
+                userInputInt = Convert.ToInt32(userInput);
+
+                if(userInputInt < 1 || userInputInt > bookCollection.BookCount())
+                {
+                    Console.Clear();
+                    Console.WriteLine("Please enter a value between 1 and {0}", bookCollection.BookCount());
+                    PauseScreen();
+                }
+            } while (userInputInt < 1 || userInputInt > bookCollection.BookCount());
+
+            return Borrow(userInputInt, bookCollection);
+        }
+
+        /// loops over all books in the book library and removes the chosen book from the library
+        /// param name="bookTitle" the user inputted title
+        /// param name="bookCollection" the established collection of books
+        /// returns: the book to be moved to the book list
+        public static Book Borrow(int userChoice, Library<Book> bookCollection)
+        {
+            int count = 1;
+
+            foreach (Book books in bookCollection)
+            {
+                if (count == userChoice)
+                {
+                    bookCollection.RemoveBook(books);
+                    return books;
+                }
+
+                count++;
+            }
+
+            throw new Exception("Book not Found!!");
+        }
+
+        /// <summary>
+        /// Method to Display all items in the Book Bag
+        /// </summary>
+        /// <param name="bookBag">List passed Forward</param>
+        /// <returns>String Output</returns>
+        public static string ViewBookBag(List<Book> bookBag)
+        {
+            string output = $"You currently have {bookBag.Count} books in your Book Bag.\n\n";
+            int count = 1;
+
+            foreach (var bagBook in bookBag)
+            {
+                output += $"{count++}. {bagBook.Title} - {bagBook.FirstName} {bagBook.LastName}\n";
+            }
+
+            return output;
+        }
+
+        public static void ReturnBook(List<Book> bookBag, Library<Book> bookCollection)
+        {
+            // Instantiates a Dictionary Object
+            Dictionary<int, Book> books = new Dictionary<int, Book>();
+
+            // Prompt User to choose book to return
+            Console.WriteLine("Choose a book to return to the library: ");
+
+            // Counter to count the books in the book bag start at first item
+            int counter = 1;
+
+            // Iterate through each item in the book bag
+            foreach (var item in bookBag)
+            {
+                // Add Key Value Pair to Dictionary
+                books.Add(counter, item);
+
+                // Lists out the books in book bag in numerical order
+                Console.WriteLine($"{counter++}. {item.Title} - {item.FirstName} {item.LastName}");
+            }
+
+            // Reads in the user response on which book to return
+            string response = Console.ReadLine();
+
+            // Parse the response into an Int otherwise throw an error
+            int.TryParse(response, out int selection);
+
+            // Get the book that corresponds the user input or throw an error
+            books.TryGetValue(selection, out Book returnedBook);
+
+            // Removes the book from the Book Bag
+            bookBag.Remove(returnedBook);
+
+            // Adds the Book back to the library Collection
+            bookCollection.AddBook(returnedBook);
+
         }
     }
 }

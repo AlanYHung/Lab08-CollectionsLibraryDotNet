@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LibraryCollections.Classes
 {
-    class Library<T> : IEnumerable
+    public class Library<T> : IEnumerable
     {
         T[] books = new T[5];
         int length;
@@ -34,8 +34,13 @@ namespace LibraryCollections.Classes
             {
                 if(bookToRemove <= index)
                 {
-                    books[index] = books[index + 1];
+                    if(index < length - 1)
+                    {
+                        books[index] = books[index + 1];
+                    }
                 }
+
+                index++;
             }
 
             length--;

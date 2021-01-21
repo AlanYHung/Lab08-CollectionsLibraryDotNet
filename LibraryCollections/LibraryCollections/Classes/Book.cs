@@ -29,7 +29,8 @@ namespace LibraryCollections.Classes
         {
             Title = title;
             BookGenre = bookGenre;
-            Author Author = new Author(authFName, authLName);
+            FirstName = authFName;
+            LastName = authLName;
         }
     }
 
